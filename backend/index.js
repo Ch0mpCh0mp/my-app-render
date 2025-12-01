@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
 });
 
 
-//POST contacts
+/* //POST contacts
 app.post("/contacts", async (req, res) => {
     try {
       const { name, telephone, address, category } = req.body;
@@ -42,7 +42,7 @@ app.get("/contacts", async (req, res) => {
     }
   });  
 
- // 
+ //  */
 
 
 app.listen(PORT, () => {
