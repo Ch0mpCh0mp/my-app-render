@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
 });
 
 
-/* //POST contacts
+//POST contacts
 app.post("/contacts", async (req, res) => {
     try {
       const { name, telephone, address, category } = req.body;
@@ -42,7 +42,16 @@ app.get("/contacts", async (req, res) => {
     }
   });  
 
- //  */
+ // DELETE
+ app.delete("/contacts/:id", async (req, res) => {
+  const { id } = req.params;
+
+  await prisma.contact.delete({
+    where: { id: Number(id) },
+  });
+
+  res.status(200).json({ message: "Contact deleted" });
+});
 
 
 app.listen(PORT, () => {
