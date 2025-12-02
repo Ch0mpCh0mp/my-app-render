@@ -2,7 +2,7 @@
 
 import { useState, useEffect, FormEvent } from "react";
 import { ContactsCard } from "../../components/ContactsCard";
-import { Contacts } from "../../fakedb";
+/* import { Contacts } from "../../fakedb"; */
 
 type Contact = {
   id: number;
@@ -17,7 +17,7 @@ const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
 export default function Home() {
   // Kontakte aus dem Backend holen und in den State speichern
-  const [contacts, setContacts] = useState<Contact[]>(Contacts);
+  const [contacts, setContacts] = useState<Contact[]>([]);
 
   // die vier eingabefelder für den neuen kontakt
   const [name, setName] = useState("");
@@ -26,7 +26,7 @@ export default function Home() {
   const [category, setCategory] = useState("");
 
   // loading zeigt loading zustand an und error speichert fehlernachrichten
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   // POST - neuen kontakt erstellen funktion
@@ -99,46 +99,46 @@ export default function Home() {
     }
   };
   
-  // GET - kontakte laden beim initialen rendern
-  // useEffect(() => {
-  //   const loadContacts = async () => {
-  //     try {
-  //       const res = await fetch(`${API_BASE}/contacts`, {
-  //         method: "GET",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       });
+  //GET - kontakte laden beim initialen rendern
+  useEffect(() => {
+    const loadContacts = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/contacts`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
-  //       if (!res.ok) {
-  //         throw new Error(`Fehler beim Laden: ${res.status}`);
-  //       }
+        if (!res.ok) {
+          throw new Error(`Fehler beim Laden: ${res.status}`);
+        }
 
-  //       const data: Contact[] = await res.json();
-  //       setContacts(data);
-  //     } catch (err) {
-  //       console.error(err);
+        const data: Contact[] = await res.json();
+        setContacts(data);
+      } catch (err) {
+        console.error(err);
 
-  //       const message =
-  //         err instanceof Error ? err.message : "Unbekannter Fehler beim laden";
+        const message =
+          err instanceof Error ? err.message : "Unbekannter Fehler beim laden";
 
-  //       setError(message);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
+        setError(message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  //   loadContacts();
-  // }, []);
+    loadContacts();
+  }, []);
 
-  // loading und error anzeige
-  // if (loading) {
-  //   return <main>Kontakte werden geladen...</main>;
-  // }
+  //loading und error anzeige
+  if (loading) {
+    return <main>Kontakte werden geladen...</main>;
+  }
 
-  // if (error) {
-  //   return <main>Fehler beim Laden der Kontakte: {error}</main>;
-  // }
+  if (error) {
+    return <main>Fehler beim Laden der Kontakte: {error}</main>;
+  }
   
   return (
     <main className="flex justify-center items-center  flex-col">
