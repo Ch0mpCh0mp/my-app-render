@@ -1,15 +1,17 @@
 import express from "express"
 import { PrismaClient } from "@prisma/client";
+import cors from "cors";
 const prisma = new PrismaClient();
 
 const app = express();
-const PORT = process.env.PORT||5050;
+const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
+app.use(cors());
 
 // start rout
 app.get("/", (req, res) => {
-  res.send("Backend doon!");
+  res.send("Backend done!");
 });
 
 
