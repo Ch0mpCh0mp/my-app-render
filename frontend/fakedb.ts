@@ -34,7 +34,7 @@ export const Contacts = [
     address: "Bremen",
     category: "Work"
     },
-            {
+        {
     id: 6,
     name: "Khatuna",
     telephone: "+49 1212221",
